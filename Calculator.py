@@ -1,31 +1,41 @@
+import tkinter as tk
+window = tk.Tk()
 
-l = input("Type Here: ")
-l = l.split( )
+tk.Label(window, text="Numbers:").grid(row=0)
+e1 = tk.Entry(window)
+e1.grid(row=0, column=1)
 
-total = 0
+p = input("Type Here: ")
+
+def hello():
+    l = e1.get()
+    l = l.split( )
+    l = list(map(int, l)) 
+
+    print(l)
+    total = 0
+    sto = 0
+    counter = 0
+
+
+    print(l)
+    print(str(sum(l)))
+
+hello()
+window.mainloop()
+
+
+
+
 
 def add(ls):
-    total = 1
-    prev = 0
-
-        
-    total = 1098273490817234908172340981720948719208740129874091287490827190847920749012874908274987290471029374092187401298734 ** 19817234912734908213709487120983470921837430912873409182734091827384712394870192734091287304917283409817209487123098740918243
-    return total
-
-def multiply(ls):
-    total = 1
+    total = 0
     for i in ls:
-        total = int(total) * int(i)
+        total = int(total) + int(i)
     return total
 
-
-
-print(add(l))
-
-# import tkinter as tk
-
-# top = tk.Tk()
-
-
-
-# top.mainloop()
+def subtract(ls):
+    total = 0
+    for i in ls:
+        total = int(total) - int(i)
+    return total
