@@ -1,27 +1,23 @@
 import tkinter as tk
 window = tk.Tk()
 
-tk.Label(window, text="Numbers:").grid(row=0)
-e1 = tk.Entry(window)
-e1.grid(row=0, column=1)
-
-p = input("Type Here: ")
-
-def hello():
+def calc():
     l = e1.get()
     l = l.split( )
-    l = list(map(int, l)) 
-
-    print(l)
-    total = 0
-    sto = 0
-    counter = 0
-
+    l = list(map(int, l))
 
     print(l)
     print(str(sum(l)))
 
-hello()
+tk.Label(window, text="Numbers:").grid(row=0)
+e1 = tk.Entry(window)
+B = tk.Button(window, text ="Hello", command = calc)
+
+e1.grid(row=0, column=1)
+
+
+
+calc()
 window.mainloop()
 
 
