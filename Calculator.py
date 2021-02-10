@@ -40,8 +40,13 @@ def divide():
     l = l.split( )
     l = list(map(int, l))
     ans = 1
+    counter = 0
     for i in l:
-        ans = i / 
+        counter += 1
+        if counter == 1:
+            ans = i / ans
+        else:
+            ans = ans / i
         print(ans)
     e1.delete(0, "end")
     e1.insert(0, ans)
