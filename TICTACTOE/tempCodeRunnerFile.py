@@ -1,2 +1,1 @@
-        cpu()
-        win()
+cpu

@@ -8,7 +8,7 @@ counter = "x"
 locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"RB":[]}
 winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
 awin = [["LT", "MT"], ["LT","RT"], ["MT", "RT"], ["LM", "MM"], ["LM", "RM"], ["MM", "RM"], ["LB", "MB"], ["LB", "RB"], ["MB", "RB"], ["LT", "LM"], ["LT", "LB"], ["LM", "LB"], ["MT", "MM"], ["MT""MB"], ["MM", "MB"], ["RT", "RM"], ["RT", "RB"], ["RM", "RB"], ["LT", "MM"], ["LT", "RB"],  ["MM", "RB"], ["RT", "MM"], ["RT", "LB"], ["MM", "LB"]]
-
+preventRun = False
 def Change(b, counter):
     
     if b == "LT":
@@ -41,7 +41,7 @@ def Change(b, counter):
 
 def MainF(b):
     global counter
-    
+    global preventRun
     if locaterDic[b] == []:
         if counter == "x":
             
@@ -52,10 +52,15 @@ def MainF(b):
 
             Change(b, counter)
             counter = "x"
+        
         win()
+        cpu()
+        if preventRun is False:
+            win()
         
 
 def win():
+    global preventRun
     scount = 0
     notRUN = False
     winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
@@ -67,18 +72,31 @@ def win():
         if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
             gameMessage("O")
             notRUN = True
+            preventRun = True
         elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
             gameMessage("X")
             notRUN = True
+            preventRun = True
+
 
     if notRUN is False:
         if scount == 9:
             gameMessage("")
-    cpu()
+            preventRun = True
+
 
 
 def gameMessage(team):
+    global locaterDic
+    global preventRun
     def close():
+        global preventRun
+        global locaterDic
+        preventRun = False
+        for i in locaterDic:
+            locaterDic[i] = []
+
+
         LT_text.set("")    
         MT_text.set("")
         RT_text.set("")
@@ -88,7 +106,6 @@ def gameMessage(team):
         LB_text.set("")
         MB_text.set("")
         RB_text.set("")
-        locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"RB":[]}
 
         Message.destroy()
         
@@ -105,29 +122,36 @@ def gameMessage(team):
     b.grid(row=1, column=0)
 
 def cpu():
-    notRUN = False
-    xpos = []
-    for i in locaterDic:
-        if locaterDic[i] == ['x']:
-            xpos.append(i)
-    for pat in awin:
-        if all(letter in xpos for letter in pat):
-            for i in winLIST:
-                if pat[0] in str(i) and pat[1] in str(i):
-                    i.remove(pat[0])
-                    i.remove(pat[1])
-                    i = str(i).replace("[", "").replace("]", "").replace("'", "")
-                    if notRUN is False:
-                        if locaterDic[i] == []:
-                            notRUN = True
-                            Change(i, "o")
-                            break
-                    
-    if notRUN is False:
+    global preventRun
+    if preventRun is False:
+        notRUN = False
+        xpos = []
+        winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
+
+
+
         for i in locaterDic:
-            if locaterDic[i] == []: 
-                Change(i, "o")
-                break
+            if locaterDic[i] == ['x']:
+                xpos.append(i)
+        for pat in awin:
+            if all(letter in xpos for letter in pat):
+                for i in winLIST:
+                    if pat[0] in str(i) and pat[1] in str(i):
+
+                        i.remove(pat[0])
+                        i.remove(pat[1])
+                        i = str(i).replace("[", "").replace("]", "").replace("'", "")
+                        if notRUN is False:
+                            if locaterDic[i] == []:
+                                notRUN = True
+                                Change(i, "o")
+                                break
+                        
+        if notRUN is False:
+            for i in locaterDic:
+                if locaterDic[i] == []: 
+                    Change(i, "o")
+                    break
 
 
 
