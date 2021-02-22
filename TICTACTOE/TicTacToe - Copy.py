@@ -6,6 +6,8 @@ root.minsize(250, 100)
 root.title("TicTacToe")
 counter = "x"
 locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"RB":[]}
+winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
+awin = [["LT", "MT"], ["LT","RT"], ["MT", "RT"], ["LM", "MM"], ["LM", "RM"], ["MM", "RM"], ["LB", "MB"], ["LB", "RB"], ["MB", "RB"], ["LT", "LM"], ["LT", "LB"], ["LM", "LB"], ["MT", "MM"], ["MT""MB"], ["MM", "MB"], ["RT", "RM"], ["RT", "RB"], ["RM", "RB"], ["LT", "MM"], ["LT", "RB"],  ["MM", "RB"], ["RT", "MM"], ["RT", "LB"], ["MM", "LB"]]
 
 def MainF(b, counter):
     
@@ -68,22 +70,7 @@ def cpuCorners(status):
     corners = ['LT', 'RT', 'RB', 'LB']
     print(status)
     notRUN = False
-    if status is False:
-        for i in corners:
-            if locaterDic[i] == []:
-                locaterDic[i].append("o")
-                if i == "LT":
-                    LT_text.set("o")
-                    notRUN = True
-                elif i == "RT":
-                    RT_text.set("o")
-                    notRUN = True
-                elif i == "LB":
-                    LB_text.set("o")
-                    notRUN = True
-                elif i == "RB":
-                    RB_text.set("o")
-                    notRUN = True
+
     if notRUN is False:
         for i in locaterDic:
             print(locaterDic[i])
@@ -94,71 +81,27 @@ def cpuCorners(status):
 def cpu():
     count = 0
     notRUN = False
-    corners = ['LT', 'RT', 'RB', 'LB']
-    for i in corners:
-        if str(locaterDic).count("o") < 2:
-            print(locaterDic[i])
-            if locaterDic[i] == []:
-                locaterDic[i].append("o")
-                if i == "LT":
-                    LT_text.set("o")
-                    notRUN = True
-                elif i == "RT":
-                    RT_text.set("o")
-                    notRUN = True
-                elif i == "RB":
-                    print("RU")
-                    RB_text.set("o")
-                    notRUN = True
-                elif i == "LB":
-                    print("LEFT BOTTM")
-                    LB_text.set("o")
-                    notRUN = True                    
-                break
+    positions = ['LT', 'MT', 'RT', 'LM', 'MM', 'RM', 'LB', 'MB', 'RB']
+    xpos = []
+    count = count + 1
+    for i in locaterDic:
+        if locaterDic[i] == ['x']:
+            xpos.append(i)
+    for pat in awin:
+        if all(letter in xpos for letter in pat):
+            for i in winLIST:
+                pat = str(pat).replace("[", "")
+                pat = str(pat).replace("]", "")
+                print(pat)
+                print(i)
+                if str(pat) in str(i):
+                    print(str())
+            
+        
+            
     
-    if notRUN == False:
-        
-        if str(locaterDic).count("o") > 1:
-            for i in corners:
-                if locaterDic[i] == ['o']:
+            
 
-                    if i == "RT":
-                        if locaterDic["MT"] == []:
-                            MT_text.set("o")
-                            locaterDic["MT"].append("o")
-                            notRUN = True
-                        else:
-                            if notRUN is False:
-                                cpuCorners(notRUN)
-                                break
-                    elif i == "RB":
-                        if locaterDic["RM"] == []:
-                            RM_text.set("o")
-                            locaterDic["RM"].append("o")
-                            notRUN = True
-                        else:
-                            if notRUN is False:
-                                cpuCorners(notRUN)
-                                break
-                    elif i == "LB":
-                        if locaterDic["MB"] == []:
-                            MB_text.set("o")
-                            locaterDic["MB"].append("o")
-                            notRUN = True
-                        else:
-                            if notRUN is False:
-                                cpuCorners(notRUN)
-                                break
-                    elif i == "RB":
-                        if locaterDic["LM"] == []:
-                            LM_text.set("o")
-                            locaterDic["LM"].append("o")
-                            notRUN = True
-                        else:
-                            if notRUN is False:
-                                cpuCorners(notRUN)
-                                break
-        
                     
 
     

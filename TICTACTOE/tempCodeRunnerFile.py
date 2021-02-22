@@ -1,1 +1,1 @@
-    # errWin.destroy()
+        print(pos)
