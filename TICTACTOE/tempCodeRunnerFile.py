@@ -1,1 +1,2 @@
-        print(pos)
+                print(pat)
+                print(i)

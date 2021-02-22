@@ -9,7 +9,7 @@ locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"R
 winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
 awin = [["LT", "MT"], ["LT","RT"], ["MT", "RT"], ["LM", "MM"], ["LM", "RM"], ["MM", "RM"], ["LB", "MB"], ["LB", "RB"], ["MB", "RB"], ["LT", "LM"], ["LT", "LB"], ["LM", "LB"], ["MT", "MM"], ["MT""MB"], ["MM", "MB"], ["RT", "RM"], ["RT", "RB"], ["RM", "RB"], ["LT", "MM"], ["LT", "RB"],  ["MM", "RB"], ["RT", "MM"], ["RT", "LB"], ["MM", "LB"]]
 
-def MainF(b, counter):
+def Change(b, counter):
     
     if b == "LT":
         LT_text.set(counter)
@@ -39,17 +39,17 @@ def MainF(b, counter):
         RB_text.set(counter)
         locaterDic["RB"].append(counter)  
 
-def Change(b):
+def MainF(b):
     global counter
     
     
     if counter == "x":
-        MainF(b, counter)
+        Change(b, counter)
 
         counter = "x"
     else:
 
-        MainF(b, counter)
+        Change(b, counter)
         counter = "x"
     cpu()
     win()
@@ -59,11 +59,11 @@ def win():
     for i in winLIST:
         if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
             print("win")
-            winMessage("o")
+            gameMessage("O")
         elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
             print("win")
 
-            winMessage("x")
+            gameMessage("X")
 
 
 def cpuCorners(status):
@@ -75,7 +75,7 @@ def cpuCorners(status):
         for i in locaterDic:
             print(locaterDic[i])
             if locaterDic[i] == []: 
-                MainF(i, "o")
+                Change(i, "o")
                 break
 
 def cpu():
@@ -89,14 +89,27 @@ def cpu():
             xpos.append(i)
     for pat in awin:
         if all(letter in xpos for letter in pat):
+            print("notrun")
             for i in winLIST:
-                pat = str(pat).replace("[", "")
-                pat = str(pat).replace("]", "")
-                print(pat)
-                print(i)
-                if str(pat) in str(i):
-                    print(str())
-            
+                if pat[0] in str(i) and pat[1] in str(i):
+                    i.remove(pat[0])
+                    i.remove(pat[1])
+                    i = str(i).replace("[", "").replace("]", "").replace("'", "")
+                    print(locaterDic[i])
+                    if notRUN is False:
+                        if locaterDic[i] == []:
+                            notRUN = True
+                            Change(i, "o")
+                            break
+                    
+    print(notRUN)
+    if notRUN is False:
+        for i in locaterDic:
+            print(locaterDic[i])
+            if locaterDic[i] == []: 
+                Change(i, "o")
+                break
+
         
             
     
@@ -109,7 +122,7 @@ def cpu():
 
 
 
-def winMessage(team):
+def gameMessage(team):
 
     def close():
         errWin.destroy()
@@ -118,7 +131,7 @@ def winMessage(team):
     errWin = tk.Toplevel()
     errWin.wm_title("Window")
 
-    l = tk.Label(errWin, text="WIN " + team)
+    l = tk.Label(errWin, text=team + " Has Won!")
     l.grid(row=0, column=0)
 
     b = tk.Button(errWin, text="Okay", command = close)
@@ -136,15 +149,15 @@ RB_text = tk.StringVar()
 
 myFont = font.Font(size=30)
 
-LT = tk.Button(root, textvariable=LT_text, font = myFont, height = 1, width = 3, command= lambda: Change("LT"))
-MT = tk.Button(root, textvariable=MT_text, font = myFont, height = 1, width = 3, command= lambda: Change("MT"))
-RT = tk.Button(root, textvariable=RT_text, font = myFont, height = 1, width = 3, command= lambda: Change("RT"))
-LM = tk.Button(root, textvariable=LM_text, font = myFont, height = 1, width = 3, command= lambda: Change("LM"))
-MM = tk.Button(root, textvariable=MM_text, font = myFont, height = 1, width = 3, command= lambda: Change("MM"))
-RM = tk.Button(root, textvariable=RM_text, font = myFont, height = 1, width = 3, command= lambda: Change("RM"))
-LB = tk.Button(root, textvariable=LB_text, font = myFont, height = 1, width = 3, command= lambda: Change("LB"))
-MB = tk.Button(root, textvariable=MB_text, font = myFont, height = 1, width = 3, command= lambda: Change("MB"))
-RB = tk.Button(root, textvariable=RB_text, font = myFont, height = 1, width = 3, command= lambda: Change("RB"))
+LT = tk.Button(root, textvariable=LT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LT"))
+MT = tk.Button(root, textvariable=MT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MT"))
+RT = tk.Button(root, textvariable=RT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RT"))
+LM = tk.Button(root, textvariable=LM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LM"))
+MM = tk.Button(root, textvariable=MM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MM"))
+RM = tk.Button(root, textvariable=RM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RM"))
+LB = tk.Button(root, textvariable=LB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LB"))
+MB = tk.Button(root, textvariable=MB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MB"))
+RB = tk.Button(root, textvariable=RB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RB"))
 
 LT.grid(row=0, column=0)
 MT.grid(row=0, column=1)
