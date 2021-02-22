@@ -1,2 +1,2 @@
-                print(pat)
-                print(i)
+        cpu()
+        win()

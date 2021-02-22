@@ -42,24 +42,67 @@ def Change(b, counter):
 def MainF(b):
     global counter
     
-    
-    if counter == "x":
-        Change(b, counter)
+    if locaterDic[b] == []:
+        if counter == "x":
+            
+            Change(b, counter)
 
-        counter = "x"
-    else:
+            counter = "x"
+        else:
 
-        Change(b, counter)
-        counter = "x"
-    cpu()
-    win()
+            Change(b, counter)
+            counter = "x"
+        win()
+        
 
 def win():
+    scount = 0
+    notRUN = False
+    winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
+    for i in locaterDic:
+        if locaterDic[i] != []:
+            scount += 1
+ 
     for i in winLIST:
         if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
             gameMessage("O")
+            notRUN = True
         elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
             gameMessage("X")
+            notRUN = True
+
+    if notRUN is False:
+        if scount == 9:
+            gameMessage("")
+    cpu()
+
+
+def gameMessage(team):
+    def close():
+        LT_text.set("")    
+        MT_text.set("")
+        RT_text.set("")
+        LM_text.set("")
+        MM_text.set("")
+        RM_text.set("")
+        LB_text.set("")
+        MB_text.set("")
+        RB_text.set("")
+        locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"RB":[]}
+
+        Message.destroy()
+        
+    Message = tk.Toplevel()
+    Message.wm_title("Window")
+
+    if team == "":
+        l = tk.Label(Message, text="Draw")
+    else:
+        l = tk.Label(Message, text=team + " Has Won!")
+    l.grid(row=0, column=0)
+
+    b = tk.Button(Message, text="Okay", command = close)
+    b.grid(row=1, column=0)
 
 def cpu():
     notRUN = False
@@ -87,20 +130,7 @@ def cpu():
                 break
 
 
-def gameMessage(team):
 
-    def close():
-        Message.destroy()
-        
-
-    Message = tk.Toplevel()
-    Message.wm_title("Window")
-
-    l = tk.Label(Message, text=team + " Has Won!")
-    l.grid(row=0, column=0)
-
-    b = tk.Button(Message, text="Okay", command = close)
-    b.grid(row=1, column=0)
     
 LT_text = tk.StringVar()
 MT_text = tk.StringVar()

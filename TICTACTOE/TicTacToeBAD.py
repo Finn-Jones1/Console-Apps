@@ -56,17 +56,14 @@ def win():
     winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
     for i in winLIST:
         if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
-            print("win")
             winMessage("o")
         elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
-            print("win")
 
             winMessage("x")
 
 
 def cpuCorners(status):
     corners = ['LT', 'RT', 'RB', 'LB']
-    print(status)
     notRUN = False
     if status is False:
         for i in corners:
@@ -86,7 +83,6 @@ def cpuCorners(status):
                     notRUN = True
     if notRUN is False:
         for i in locaterDic:
-            print(locaterDic[i])
             if locaterDic[i] == []: 
                 MainF(i, "o")
                 break
@@ -97,7 +93,6 @@ def cpu():
     corners = ['LT', 'RT', 'RB', 'LB']
     for i in corners:
         if str(locaterDic).count("o") < 2:
-            print(locaterDic[i])
             if locaterDic[i] == []:
                 locaterDic[i].append("o")
                 if i == "LT":
@@ -107,11 +102,9 @@ def cpu():
                     RT_text.set("o")
                     notRUN = True
                 elif i == "RB":
-                    print("RU")
                     RB_text.set("o")
                     notRUN = True
                 elif i == "LB":
-                    print("LEFT BOTTM")
                     LB_text.set("o")
                     notRUN = True                    
                 break
