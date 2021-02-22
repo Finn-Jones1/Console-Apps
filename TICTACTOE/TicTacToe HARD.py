@@ -55,86 +55,51 @@ def MainF(b):
     win()
 
 def win():
-    winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
     for i in winLIST:
         if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
-            print("win")
             gameMessage("O")
         elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
-            print("win")
-
             gameMessage("X")
 
-
-def cpuCorners(status):
-    corners = ['LT', 'RT', 'RB', 'LB']
-    print(status)
-    notRUN = False
-
-    if notRUN is False:
-        for i in locaterDic:
-            print(locaterDic[i])
-            if locaterDic[i] == []: 
-                Change(i, "o")
-                break
-
 def cpu():
-    count = 0
     notRUN = False
-    positions = ['LT', 'MT', 'RT', 'LM', 'MM', 'RM', 'LB', 'MB', 'RB']
     xpos = []
-    count = count + 1
     for i in locaterDic:
         if locaterDic[i] == ['x']:
             xpos.append(i)
     for pat in awin:
         if all(letter in xpos for letter in pat):
-            print("notrun")
             for i in winLIST:
                 if pat[0] in str(i) and pat[1] in str(i):
                     i.remove(pat[0])
                     i.remove(pat[1])
                     i = str(i).replace("[", "").replace("]", "").replace("'", "")
-                    print(locaterDic[i])
                     if notRUN is False:
                         if locaterDic[i] == []:
                             notRUN = True
                             Change(i, "o")
                             break
                     
-    print(notRUN)
     if notRUN is False:
         for i in locaterDic:
-            print(locaterDic[i])
             if locaterDic[i] == []: 
                 Change(i, "o")
                 break
-
-        
-            
-    
-            
-
-                    
-
-    
-
-
 
 
 def gameMessage(team):
 
     def close():
-        errWin.destroy()
+        Message.destroy()
         
 
-    errWin = tk.Toplevel()
-    errWin.wm_title("Window")
+    Message = tk.Toplevel()
+    Message.wm_title("Window")
 
-    l = tk.Label(errWin, text=team + " Has Won!")
+    l = tk.Label(Message, text=team + " Has Won!")
     l.grid(row=0, column=0)
 
-    b = tk.Button(errWin, text="Okay", command = close)
+    b = tk.Button(Message, text="Okay", command = close)
     b.grid(row=1, column=0)
     
 LT_text = tk.StringVar()
@@ -168,8 +133,5 @@ RM.grid(row=1, column=2)
 LB.grid(row=2, column=0)
 MB.grid(row=2, column=1)
 RB.grid(row=2, column=2)
-
-# MT.pack()
-
 
 root.mainloop()
