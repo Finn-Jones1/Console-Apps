@@ -1,13 +1,62 @@
 import tkinter as tk
 import tkinter.font as font
 
-root = tk.Tk()
-root.minsize(250, 100)
-root.title("TicTacToe")
+window = tk.Tk()
+window.minsize(250, 100)
+window.title("TicTacToe")
 counter = "x"
-locaterDic = {"LT":[],"MT":[],"RT":[],"LM":[],"MM":[],"RM":[],"LB":[],"MB":[],"RB":[]}
-winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
-awin = [["LT", "MT"], ["LT","RT"], ["MT", "RT"], ["LM", "MM"], ["LM", "RM"], ["MM", "RM"], ["LB", "MB"], ["LB", "RB"], ["MB", "RB"], ["LT", "LM"], ["LT", "LB"], ["LM", "LB"], ["MT", "MM"], ["MT""MB"], ["MM", "MB"], ["RT", "RM"], ["RT", "RB"], ["RM", "RB"], ["LT", "MM"], ["LT", "RB"],  ["MM", "RB"], ["RT", "MM"], ["RT", "LB"], ["MM", "LB"]]
+
+# Player Locations
+locaterDic = {
+    "LT": [],
+    "MT": [],
+    "RT": [],
+    "LM": [],
+    "MM": [],
+    "RM": [],
+    "LB": [],
+    "MB": [],
+    "RB": [],
+}
+# List of winning combinations
+winList = [
+    ["LT", "MT", "RT"],
+    ["LM", "MM", "RM"],
+    ["LB", "MB", "RB"],
+    ["LT", "LM", "LB"],
+    ["MT", "MM", "MB"],
+    ["RT", "RM", "RB"],
+    ["LT", "MM", "RB"],
+    ["RT", "MM", "LB"],
+]
+# List of almost winning combinations
+awin = [
+    ["LT", "MT"],
+    ["LT", "RT"],
+    ["MT", "RT"],
+    ["LM", "MM"],
+    ["LM", "RM"],
+    ["MM", "RM"],
+    ["LB", "MB"],
+    ["LB", "RB"],
+    ["MB", "RB"],
+    ["LT", "LM"],
+    ["LT", "LB"],
+    ["LM", "LB"],
+    ["MT", "MM"],
+    ["MT", "MB"],
+    ["MM", "MB"],
+    ["RT", "RM"],
+    ["RT", "RB"],
+    ["RM", "RB"],
+    ["LT", "MM"],
+    ["LT", "RB"],
+    ["MM", "RB"],
+    ["RT", "MM"],
+    ["RT", "LB"],
+    ["MM", "LB"],
+]
+
 preventRun = False
 def Change(b, counter):
     
@@ -61,19 +110,27 @@ def MainF(b):
 
 def win():
     global preventRun
+    global winList
     scount = 0
     notRUN = False
-    winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
     for i in locaterDic:
         if locaterDic[i] != []:
             scount += 1
  
-    for i in winLIST:
-        if locaterDic[i[0]] == ['o'] and locaterDic[i[1]] == ['o'] and locaterDic[i[2]] == ['o']:
+    for i in winList:
+        if (
+            locaterDic[i[0]] == ["o"]
+            and locaterDic[i[1]] == ["o"]
+            and locaterDic[i[2]] == ["o"]
+        ):
             gameMessage("O")
             notRUN = True
             preventRun = True
-        elif locaterDic[i[0]] == ['x'] and locaterDic[i[1]] == ['x'] and locaterDic[i[2]] == ['x']:
+        elif (
+            locaterDic[i[0]] == ["x"]
+            and locaterDic[i[1]] == ["x"]
+            and locaterDic[i[2]] == ["x"]
+        ):
             gameMessage("X")
             notRUN = True
             preventRun = True
@@ -126,7 +183,16 @@ def cpu():
     if preventRun is False:
         notRUN = False
         xpos = []
-        winLIST = [["LT", "MT", "RT"], ["LM", "MM", "RM"], ["LB", "MB", "RB"], ["LT", "LM", "LB"], ["MT", "MM", "MB"], ["RT", "RM", "RB"], ["LT", "MM", "RB"], ["RT", "MM", "LB"]]
+        winList = [
+            ["LT", "MT", "RT"],
+            ["LM", "MM", "RM"],
+            ["LB", "MB", "RB"],
+            ["LT", "LM", "LB"],
+            ["MT", "MM", "MB"],
+            ["RT", "RM", "RB"],
+            ["LT", "MM", "RB"],
+            ["RT", "MM", "LB"],
+        ]
 
 
 
@@ -135,7 +201,7 @@ def cpu():
                 xpos.append(i)
         for pat in awin:
             if all(letter in xpos for letter in pat):
-                for i in winLIST:
+                for i in winList:
                     if pat[0] in str(i) and pat[1] in str(i):
 
                         i.remove(pat[0])
@@ -168,15 +234,15 @@ RB_text = tk.StringVar()
 
 myFont = font.Font(size=30)
 
-LT = tk.Button(root, textvariable=LT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LT"))
-MT = tk.Button(root, textvariable=MT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MT"))
-RT = tk.Button(root, textvariable=RT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RT"))
-LM = tk.Button(root, textvariable=LM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LM"))
-MM = tk.Button(root, textvariable=MM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MM"))
-RM = tk.Button(root, textvariable=RM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RM"))
-LB = tk.Button(root, textvariable=LB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LB"))
-MB = tk.Button(root, textvariable=MB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MB"))
-RB = tk.Button(root, textvariable=RB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RB"))
+LT = tk.Button(window, textvariable=LT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LT"))
+MT = tk.Button(window, textvariable=MT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MT"))
+RT = tk.Button(window, textvariable=RT_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RT"))
+LM = tk.Button(window, textvariable=LM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LM"))
+MM = tk.Button(window, textvariable=MM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MM"))
+RM = tk.Button(window, textvariable=RM_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RM"))
+LB = tk.Button(window, textvariable=LB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("LB"))
+MB = tk.Button(window, textvariable=MB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("MB"))
+RB = tk.Button(window, textvariable=RB_text, font = myFont, height = 1, width = 3, command= lambda: MainF("RB"))
 
 LT.grid(row=0, column=0)
 MT.grid(row=0, column=1)
@@ -188,4 +254,4 @@ LB.grid(row=2, column=0)
 MB.grid(row=2, column=1)
 RB.grid(row=2, column=2)
 
-root.mainloop()
+window.mainloop()

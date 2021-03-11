@@ -5,6 +5,7 @@ import os
 FlexyPath = os.path.dirname(os.path.abspath(__file__))
 window = tk.Tk()
 
+
 def errorMessage():
     def clear():
         e1.delete(0, "end")
@@ -18,6 +19,8 @@ def errorMessage():
 
     b = tk.Button(errWin, text="Okay", command=clear)
     b.grid(row=1, column=0)
+
+
 def add():
     l = e1.get()
     l = l.split( )
@@ -25,10 +28,9 @@ def add():
         l = list(map(int, l))
     except:
         errorMessage()
-    print(l)
     e1.delete(0, "end")
     e1.insert(0, str(sum(l)))
-    print(str(sum(l)))
+
 
 def subtract():
     l = e1.get()
@@ -37,11 +39,10 @@ def subtract():
         l = list(map(int, l))
     except:
         errorMessage()
-    print(l)
     e1.delete(0, "end")
     e1.insert(0, str(l[0]- sum(l[1:])))
-    print(str(l[0]- sum(l[1:])))
     
+
 def multiply():
     l = e1.get()
     l = l.split( )
@@ -54,8 +55,7 @@ def multiply():
         ans = i * ans
     e1.delete(0, "end")
     e1.insert(0, ans)
-    print(l)
-    print(ans)
+
 
 def divide():
     l = e1.get()
@@ -72,20 +72,18 @@ def divide():
             ans = i / ans
         else:
             ans = ans / i
-        print(ans)
     e1.delete(0, "end")
     e1.insert(0, ans)
-    print(l)
-    print(ans)
+
 
 window.minsize(250, 100)
 window.title("Calculator")
 
 
-pImg = PhotoImage(file = FlexyPath + "\+.gif")
-xImg = PhotoImage(file = FlexyPath + "\mult.gif")
-minImg = PhotoImage(file = FlexyPath + "\-.gif")
-divideImg = PhotoImage(file = FlexyPath + "\divide.gif")
+pImg = PhotoImage(file = FlexyPath + "/+.gif")
+xImg = PhotoImage(file = FlexyPath + "/mult.gif")
+minImg = PhotoImage(file = FlexyPath + "/-.gif")
+divideImg = PhotoImage(file = FlexyPath + "/divide.gif")
 
 
 dividePhotoImage = divideImg.subsample(3, 3) 
@@ -93,7 +91,6 @@ timesPhotoImage = xImg.subsample(3, 3)
 addPhotoImage = pImg.subsample(3, 3) 
 minPhotoImage = minImg.subsample(3, 3) 
 
-# window.create_image(20,20, anchor=NW, image=pimg)
 tk.Label(window, text="Numbers:").grid(row=0)
 
 divB = tk.Button(window, image = dividePhotoImage, text ="/", command = divide)
